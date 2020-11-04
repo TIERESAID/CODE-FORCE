@@ -13,18 +13,18 @@ typedef struct node{
    }
 }node;
 
-
 class stack{
 public:
   node* head_ref = nullptr;
   node* push(int new_data);
      
-  bool pop();
-  int peek();
+  int pop();
+  int  top();
   bool is_empty();
-    
   void display(node* head);
-    node* return_head(){
+  void sort_stack();
+  void sort_stack_element(int x );
+  node* return_head(){
         return this->head_ref;
     }
 };
@@ -41,27 +41,39 @@ node* stack::push(int new_data ){
 }
 
 // delete an element from the stack
-bool stack::pop(){
+int stack::pop(){
     if (is_empty())
   {
     std::cout<<"under flow"<<"\n";
-    return false;
+    return 0;
   } else {
+    // head_ref is a public data ,can be acces by
+    // method
+    int x = head_ref->data;
+      
     node* temp = (head_ref);
     (head_ref) = (head_ref)->next;
     free(temp);
-    return true;
+    return x ;
   }
 }
 
-int stack::peek(){
-  if(is_empty())
+// return the top of the stack
+int stack::top(){
+  if(is_empty()){
+    std::cout<<"stack empty";
     return 0;
+  }
  return (head_ref)->data ;
 }
 
 
 bool stack::is_empty(){
+//   if (head_ref == nullptr)
+//     return true;
+//   else
+//     false;
+// }
   return ((head_ref) == nullptr);
 }
 
@@ -77,15 +89,48 @@ if (is_empty())
     std::cout<<"\n";
 }
 
+// stock  temporary  all variable via recursion and send them to the
+// function sort_stack_element
+
+void stack::sort_stack_element(int x ){
+  if(is_empty() || x > top()){
+   push(x);
+   return; // stop  and go back to sort_stack to take a new variable
+}
+ int temp = pop();
+ sort_stack_element(x);
+ push(temp);
+}
+
+void stack::sort_stack()
+{
+  // stock  temporary  all variable via recursion
+    if(!is_empty()){
+  int temp  =  pop();
+  sort_stack();
+
+  // here push them to the sort_stack_element()
+  // for sorting one by one
+  sort_stack_element(temp);
+}
+}
+
 int main(int argc, char const *argv[])
 {
   class  stack  s;
-  s.push(10);
-  s.push(20);
   s.push(30);
+  s.push(-5);
+  s.push(18);
+  s.push(14);
+  s.push(-3);
+  std::cout<<"orignal stack:";
   s.display(s.head_ref);
-  s.pop();
+  //s.pop();
+  printf("\n");
+  s.sort_stack();
+  std::cout<<"after sorting: ";
   s.display(s.head_ref);
+  printf("\n");
   return 0;
 }
 
