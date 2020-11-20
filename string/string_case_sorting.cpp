@@ -9,27 +9,38 @@ using namespace std;
  }
 std::string case_sort(std::string str , int n ){
     
-    bool swapped = true;
+    int min_index ;
     for (int i = 0; i < n; ++i)
     {
-        swapped = false ;
-        for (int j = 0; j < n-i-1; ++j)
+        min_index = i ;
+
+        if(islower(str[min_index])){
+
+        for (int j = i+1; j < n; ++j)
         {
-            if(str[j]>str[j+1]){
-                swap(str[j],str[j+1]);
-                swapped = true;
-            }
-        
+            if(islower(str[j])){
+            if(str[j]<str[min_index])
+                min_index = j;
         }
-         if(swapped == false)
-            break;
+        }
+    } else if(isupper(str[min_index])){
+
+        for (int j = i+1; j < n; ++j)
+        {
+            if(isupper(str[j])){
+            if(str[j]<str[min_index])
+                min_index = j;
+        }
+        }
+    }
+         swap(str[i],str[min_index]);
     }
 
     return str;
 }
 
 int main(){
-  std::string str = "geekforgeek";
+  std::string str = "defRTSersUXI";
   std::cout<<case_sort(str,str.length())<<std::endl;
     return 0;
 }
