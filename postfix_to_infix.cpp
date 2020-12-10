@@ -1,19 +1,20 @@
 #include <iostream>
+#include <string>
 using namespace std;
 
-class stack{
+class Stack{
   int top;
   int capacity;
-  int *array;
+  int *arr;
 
   public :
-    stack(){
+    Stack(){
     this->top = -1;
   }
-  stack(int capacity){
+  Stack(int capacity){
     this->top = -1;
     this->capacity =  capacity;
-    array = new int (capacity);
+    arr = new int (capacity);
    
   }
   bool push (int x);
@@ -24,48 +25,48 @@ class stack{
   void display();
 };
 
-bool stack::push(int x){
+bool Stack::push(int x){
   if(is_full()){
     std::cout<<"stack overflow";
   return false ;
 } else {
- array[++top] = x;
+ arr[++top] = x;
  return true;
 }
 }
 
-int stack::pop(){
+int Stack::pop(){
   if(is_empty()){
     std::cout<<" stack underflow ";
       return 0;
   } else {
-    int x = array[top];
+    int x = arr[top];
     --top;
     return x;
   }
 }
 
-int stack::peek(){
+int Stack::peek(){
  if(is_empty()){
   std::cout<<"stack is is_empty";
   return 0;
  } else {
-  int x = array[top];
+  int x = arr[top];
   return x ;
  }
 }
 
-bool stack::is_empty(){
+bool Stack::is_empty(){
 return (top<0);
 }
-bool stack::is_full(){
+bool Stack::is_full(){
   return (top>= capacity -1);
 }
 
-void stack::display(){
+void Stack::display(){
   for (int i = top; i >=0; i--)
   {
-     std::cout<<array[i]<<" ";
+     std::cout<<arr[i]<<" ";
   }
     std::cout<<"\n";
 }
@@ -73,7 +74,7 @@ void stack::display(){
  // the main function that returns value of a given postifix expression
 int evaluatePostfix(std::string &str){
   int n = (int)str.length();
-    stack stack(n);
+    Stack stack(n);
   unsigned i =0;
   for (i = 0; i < n; ++i)
   {
@@ -103,3 +104,4 @@ int main(){
     std::cout<<"postfix evaluation: "<< evaluatePostfix(exp);
     return 0;
 }
+
